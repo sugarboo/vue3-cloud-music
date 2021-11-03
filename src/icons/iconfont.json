@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "90854",
+      "name": "rank",
+      "font_class": "rank",
+      "unicode": "e722",
+      "unicode_decimal": 59170
+    },
+    {
+      "icon_id": "8555161",
+      "name": "album-line",
+      "font_class": "album-line",
+      "unicode": "e6f7",
+      "unicode_decimal": 59127
+    },
+    {
+      "icon_id": "11488166",
+      "name": "video",
+      "font_class": "video",
+      "unicode": "e76d",
+      "unicode_decimal": 59245
+    },
+    {
+      "icon_id": "15838507",
+      "name": "mic",
+      "font_class": "mic",
+      "unicode": "e678",
+      "unicode_decimal": 59000
+    },
+    {
+      "icon_id": "19378085",
+      "name": "四分音符",
+      "font_class": "sifenyinfu",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
       "icon_id": "8755498",
       "name": "朋友圈",
       "font_class": "pengyouquan",

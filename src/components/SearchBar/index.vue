@@ -29,6 +29,7 @@
           <div class="suggest-area" v-if="hasSuggest">
             <div class="songs" v-show="searchSuggestSongs !== undefined && searchSuggestSongs.length">
             <div class="suggest-title">
+              <span class="iconfont icon-sifenyinfu"></span>
               <span>单曲</span>
             </div>
               <van-list>
@@ -44,6 +45,7 @@
             </div>
             <div class="artists" v-show="searchSuggestArtists !== undefined && searchSuggestArtists.length">
               <div class="suggest-title">
+                <span class="iconfont icon-mic"></span>
                 <span>歌手</span>
               </div>
               <van-list>
@@ -54,6 +56,7 @@
             </div>
             <div class="albums" v-show="searchSuggestAlbums !== undefined && searchSuggestAlbums.length">
               <div class="suggest-title">
+                <span class="iconfont icon-album-line"></span>
                 <span>专辑</span>
               </div>
               <van-list>
@@ -69,19 +72,19 @@
         <div class="category-area">
           <div class="category-item" @click="handleClickArtists">
             <van-button round>
-              <span class="iconfont icon-wangyiyunyinle1-copy"></span>
+              <span class="iconfont icon-mic"></span>
             </van-button>
             <span class="category-title">歌手</span>
           </div>
           <div class="category-item">
             <van-button round>
-              <span class="iconfont icon-wangyiyunyinle1-copy"></span>
+              <span class="iconfont icon-video"></span>
             </van-button>
             <span class="category-title">MV</span>
           </div>
           <div class="category-item">
             <van-button round>
-              <span class="iconfont icon-wangyiyunyinle1-copy"></span>
+              <span class="iconfont icon-rank"></span>
             </van-button>
             <span class="category-title">排行榜</span>
           </div>
@@ -201,13 +204,16 @@ export default {
     }
     .suggest-area {
       .suggest-title {
+        padding-left: 8px;
         height: 24px;
         line-height: 24px;
-        padding-left: 4px;
         color: #666666;
         font-size: 14px;
         font-weight: 600;
         background-color: #f5f5f7;
+        .iconfont {
+          margin-right: 4px;
+        }
       }
     }
 
