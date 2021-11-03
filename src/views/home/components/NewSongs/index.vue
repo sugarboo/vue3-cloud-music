@@ -1,65 +1,98 @@
 <template>
   <div class="component-container">
-    <van-divider>新歌速递</van-divider>
-    <van-list>
-      <!-- <lazy-component> -->
-      <van-cell v-for="item in listData.slice(0, 10)" :key="item.id">
-        <div class="song-item">
-          <van-image class="cover-wrap" :src="item.album.blurPicUrl || ''"></van-image>
-          <div class="text-wrap">
-            <div class="name">{{ item.name }}</div>
-            <div class="artists">
-              <span v-for="(artistItem, artistIndex) in item.artists" :key="artistItem.id">
-                <span>{{ artistItem.name }}</span>
-                <span v-if="artistIndex !== item.artists.length - 1"> / </span>
-              </span>
-            </div>
-          </div>
-        </div>
+    <van-divider :style="{ borderColor: '#E57373' }">
+      <van-tag type="primary" size="medium" round>&nbsp;最新音乐&nbsp;</van-tag>
+    </van-divider>
+    <van-list 
+      finished-text="没有更多了"
+      error-text="加载失败"
+      :loading="listLoading"
+      :finished="listFinished" 
+      @load="handleLoadList"
+    >
+      <van-cell v-for="item in list" :key="item.id">
+        <song-item :data="item"></song-item>
       </van-cell>
-      <!-- </lazy-component> -->
     </van-list>
   </div>
 </template>
 
 <script lang="ts">
+import { ref } from 'vue'
+
+import { getNewSongList } from '@/api/home' // 引入api
+
+import SongItem from '@/components/SongItem/index.vue'
+
+
 export default {
   name: 'NewSongs',
-  props: {
-    listData: {
-      type: Array,
-      require: true
+
+  components: { SongItem },
+
+  setup() {
+    /* data */
+    const allList = ref([]) // 所有新歌列表数据(100条)
+    const list = ref([]) // 当前显示的列表数据
+    const limit = 20
+    const listLoading = ref(false)
+    const listFinished = ref(false)
+    let hasMore = true
+
+    /* methods */
+    /**
+     * 获取新歌速递列表数据
+     */
+    const listNewSongs = async () => {
+      try {
+        const res = await getNewSongList()
+        allList.value = res.data
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    /**
+     * van-list触底时的事件处理
+     */
+    const handleLoadList = () => {
+      if (allList.value.length === 0) {
+        listNewSongs().then(() => {
+          loadList()
+        })
+        return
+      }
+      loadList()
+    }
+
+    /**
+     * 加载更多列表数据
+     */
+    const loadList = () => {
+      listLoading.value = true
+      // 获取需要加载数据的位置索引, 为当前显示的列表的最后一个元素的索引 + 1, 即list.length
+      const index = list.value.length
+      // 是否存在更多的待加载数据: 当list.length !== allList.length时, 存在待加载的数据
+      hasMore = index !== allList.value.length ? true : false
+      if (hasMore) {
+        list.value = [...list.value, ...allList.value.slice(index, index + limit)]
+        listLoading.value = false
+        return
+      }
+      listLoading.value = false
+      listFinished.value = true
+    }
+
+    return {
+      /* data */
+      allList,
+      list,
+      listLoading,
+      listFinished,
+      /* methods */
+      handleLoadList
     }
   }
 }
 </script>
 
-<style lang="less">
-.component-container {
-  .song-item {
-    display: flex;
-    justify-content: space-between;
-    .cover-wrap {
-      width: 64px;
-      height: 64px;
-      img {
-        border-radius: 10px;
-      }
-    }
-    .text-wrap {
-      text-align: end;
-      .name, .artists {
-        max-width: 220px;
-        white-space:nowrap;/* 规定文本是否折行 */  
-        overflow: hidden;/* 规定超出内容宽度的元素隐藏 */
-        text-overflow: ellipsis; /* 超出部分以省略号形式显示 */
-      }
-      .artists {
-        color: #666666;
-        font-size: 12px;
-      }
-    }
-  }
-}
-
-</style>

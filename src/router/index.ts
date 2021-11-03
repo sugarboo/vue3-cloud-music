@@ -13,9 +13,17 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'home',
         name: 'Home',
-        component: () => import('../views/home/index.vue')
-      }
+        component: () => import('@/views/home/index.vue')
+      },
+      
     ]
+  },
+
+  /* 歌手页 */
+  {
+    path: '/artists',
+    name: 'Artists',
+    component: () => import('@/views/artists/index.vue')
   }
 ]
 

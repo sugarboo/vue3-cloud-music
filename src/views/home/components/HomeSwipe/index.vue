@@ -2,13 +2,14 @@
   <div class="component-container">
     <van-swipe
       :show-indicators="false"
+      :autoplay="5000"
     >
       <van-swipe-item
-        v-for="(item, index) in images" 
+        v-for="item in images" 
         :key="item.imageUrl"
       >
-        <van-image :src="item.imageUrl || ''">
-          <div :class="['banner-tag', index % 2 === 0 ? 'bg-color-red' : 'bg-color-blue']">
+        <van-image :src="item.imageUrl || ''" alt="swipe">
+          <div :class="['banner-tag', item.typeTitle === '新歌首发' ? 'bg-color-red' : 'bg-color-blue']">
             <span>{{ item.typeTitle }}</span>
           </div>
         </van-image>
@@ -31,15 +32,16 @@ export default {
 
 <style lang="less" scoped>
 .van-image {
+  width: 100%;
   position: relative;
   .banner-tag {
     position: absolute;
     right: 0;
     bottom: 0;
-    font-size: 14px;
+    font-size: 12px;
     color: #ffffff;
-    letter-spacing: 2px;
-    padding: 4px;
+    letter-spacing: 1px;
+    padding: 2px 2px 2px 6px;
     border-radius: 10px 0 0 0;
   }
   .bg-color-red {

@@ -40,9 +40,8 @@ export default {
 <style lang="less" scoped>
 .component-container {
   height: 100%;
-
-  :root {
-    --van-tabbar-height: 60px;
+  .van-tabbar {
+    box-shadow: 0px -1px 4px rgba(0, 0, 0, 0.1);
   }
 }
 </style>

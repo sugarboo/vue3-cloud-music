@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div>
     <div class="swipe-container">
       <home-swipe :images="banners"></home-swipe>
     </div>
@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { onMounted, ref } from 'vue'
-import { getBannersList, getNewSongList } from "@/api/home" // 引入api
+import { getBannersList } from '@/api/home' // 引入接口
 
 import HomeSwipe from './components/HomeSwipe/index.vue'
 import NewSongs from './components/NewSongs/index.vue'
@@ -22,26 +22,25 @@ export default {
   components: { HomeSwipe, NewSongs },
 
   setup() {
+    /* data */
     const banners = ref([]) // 轮播图数据
     const newSongsList = ref([]) // 新歌列表数据
 
-    /* 获取轮播图数据 */
-    const listBanners = () => {
-      getBannersList().then(res => {
+    /* methods */
+    /**
+     * 获取轮播图数据
+     */
+    const listBanners = async () => {
+      try {
+        const res = await getBannersList()
         banners.value = res.banners
-      })
-    }
-    
-    /* 获取新歌速递数据 */
-    const listNewSongs = () => {
-      getNewSongList().then(res => {
-        newSongsList.value = res.data
-      })
+      } catch (error) {
+        console.log(error)
+      }
     }
 
     onMounted(() => {
       listBanners()
-      listNewSongs()
     })
 
     return {
@@ -51,6 +50,3 @@ export default {
   }
 }
 </script>
-
-<style lang="less" scoped>
-</style>

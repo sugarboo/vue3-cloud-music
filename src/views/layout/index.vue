@@ -1,17 +1,15 @@
 <template>
-  <div class="app-container">
-    <van-config-provider :theme-vars="themeVars">
-      <div class="header-container">
-        <my-header></my-header>
-      </div>
-      <div class="main-container">
-        <router-view></router-view>
-      </div>
-      <div class="footer-container">
-        <my-footer></my-footer>
-      </div>
-    </van-config-provider>
-  </div>
+  <van-config-provider :theme-vars="themeVars">
+    <div class="header-container">
+      <my-header></my-header>
+    </div>
+    <div class="main-container">
+      <router-view></router-view>
+    </div>
+    <div class="footer-container">
+      <my-footer></my-footer>
+    </div>
+  </van-config-provider>
 </template>
 
 <script lang="ts">
@@ -25,10 +23,13 @@ export default {
   components: { ConfigProvider, MyHeader, MyFooter },
   setup() {
     /* Vant全局样式配置 */
+    const cloudMusicPrimaryColor = '#dd001b'
     const themeVars = ref({
-      tabbarHeight: '60px',
-      buttonPrimaryBackgroundColor: '#dd001b',
-      buttonPrimaryBorderColor: '#dd001b'
+      tabbarHeight: '64px',
+      buttonPrimaryBackgroundColor: cloudMusicPrimaryColor,
+      buttonPrimaryBorderColor: cloudMusicPrimaryColor,
+      tagPrimaryColor: cloudMusicPrimaryColor,
+      navBarTextColor: cloudMusicPrimaryColor
     })
     return {
       themeVars
@@ -38,23 +39,21 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.app-container {
-  .header-container {
-    width : 100%;
-    height: 60px;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
-  }
-  .main-container {
-    margin: 60px 0;
-  }
-  .footer-container {
-    width: 100%;
-    height: 60px;
-    position: fixed;
-    bottom: 0;
-    z-index: 1000;
-  }
+.header-container {
+  width : 100%;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  z-index: 1001;
+}
+.main-container {
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+.footer-container {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 1000;
 }
 </style>
