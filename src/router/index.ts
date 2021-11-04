@@ -19,11 +19,17 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
 
-  /* 歌手页 */
+  /* 歌手 - 列表页 */
   {
     path: '/artists',
     name: 'Artists',
     component: () => import('@/views/artists/index.vue')
+  },
+  /* 歌手 - 详情页 */
+  {
+    path: '/artists/detail',
+    name: 'ArtistDetail',
+    component: () => import('@/views/artists/detail.vue')
   }
 ]
 

@@ -8,7 +8,7 @@
         v-for="item in images" 
         :key="item.imageUrl"
       >
-        <van-image :src="item.imageUrl || ''" alt="swipe">
+        <van-image fit="cover" :src="item.imageUrl || ''" alt="swipe">
           <div :class="['banner-tag', item.typeTitle === '新歌首发' ? 'bg-color-red' : 'bg-color-blue']">
             <span>{{ item.typeTitle }}</span>
           </div>

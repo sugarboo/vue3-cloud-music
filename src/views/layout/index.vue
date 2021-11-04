@@ -1,13 +1,17 @@
 <template>
   <van-config-provider :theme-vars="themeVars">
     <div class="header-container">
-      <my-header></my-header>
+      <van-sticky>
+        <my-header></my-header>
+      </van-sticky>
     </div>
     <div class="main-container">
       <router-view></router-view>
     </div>
     <div class="footer-container">
-      <my-footer></my-footer>
+      <van-sticky position="bottom">
+        <my-footer></my-footer>
+      </van-sticky>
     </div>
   </van-config-provider>
 </template>
@@ -37,23 +41,3 @@ export default {
   }
 }
 </script>
-
-<style lang="less" scoped>
-.header-container {
-  width : 100%;
-  height: 60px;
-  position: fixed;
-  top: 0;
-  z-index: 1001;
-}
-.main-container {
-  margin-top: 60px;
-  margin-bottom: 60px;
-}
-.footer-container {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  z-index: 1000;
-}
-</style>

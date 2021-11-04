@@ -1,6 +1,6 @@
 <template>
   <div class="artist-item">
-    <van-image round fill :src="data.img1v1Url" />
+    <van-image round fit="cover" :src="data.picUrl + '?param=100y100' || ''" />
     <div class="text-wrap">
       <div class="name single-line">
         <span>{{ data.name }}</span>

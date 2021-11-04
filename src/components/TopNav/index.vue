@@ -2,8 +2,8 @@
   <div class="component-container">
     <van-nav-bar :title="title">
       <template #left>
-        <div class="home-btn" @click="handleClickHome">
-          <van-icon style="color: #dd001e;" name="wap-home-o" />
+        <div class="home-btn" @click="handleClickBack">
+          <van-icon style="color: #dd001e; font-weight: 600; zoom: 1.1;" name="arrow-left" />
         </div>
       </template>
     </van-nav-bar>
@@ -28,15 +28,14 @@ export default {
     /**
      * 首页按钮的点击事件处理
      */
-    const handleClickHome = () => {
-      router.push({
-        name: 'Home'
-      })
+    const handleClickBack = () => {
+      router.back() // === $router.go(-1)
     }
 
     return {
       /* methods */
-      handleClickHome
+      handleClickBack,
+      router
     }
   }
 }

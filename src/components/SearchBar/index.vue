@@ -49,7 +49,7 @@
                 <span>歌手</span>
               </div>
               <van-list>
-                <van-cell class="single-line" v-for="item in searchSuggestArtists" :key="item.id" is-link>
+                <van-cell class="single-line" v-for="item in searchSuggestArtists" :key="item.id" is-link @click="handleClickSearchArtist(item.id)">
                   <span>{{ item.name }}</span>
                 </van-cell>
               </van-list>
@@ -70,7 +70,7 @@
           </div>
         </div>
         <div class="category-area">
-          <div class="category-item" @click="handleClickArtists">
+          <div class="category-item" @click="handleClickCategoryArtists">
             <van-button round>
               <span class="iconfont icon-mic"></span>
             </van-button>
@@ -162,9 +162,19 @@ export default {
     /**
      * 歌手按钮的点击事件处理
      */
-    const handleClickArtists = () => {
+    const handleClickCategoryArtists = () => {
       router.push({
         name: 'Artists'
+      })
+    }
+
+    /**
+     * 搜索结果中的歌手点击事件处理
+     */
+    const handleClickSearchArtist = (id: number) => {
+      router.push({
+        name: 'ArtistDetail',
+        query: { id }
       })
     }
 
@@ -182,7 +192,8 @@ export default {
       handleClearSearchBar,
       handleClosePopup,
       listSearchSuggest,
-      handleClickArtists
+      handleClickCategoryArtists,
+      handleClickSearchArtist
     }
   }
 }

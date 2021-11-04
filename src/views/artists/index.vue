@@ -1,15 +1,21 @@
 <template>
-  <top-nav class="top-nav" title="歌手列表"></top-nav>
+  <van-sticky>
+    <top-nav class="top-nav" title="歌手列表"></top-nav>
+  </van-sticky>
   <div class="main-container">
     <div class="left-area">
-      <van-sidebar v-model="areaIndex" @change="handleChangeSidebar">
-        <van-sidebar-item v-for="item in areaMap" :key="item.value" :title="item.title" />
-      </van-sidebar>
+      <van-sticky offset-top="48px">
+        <van-sidebar v-model="areaIndex" @change="handleChangeSidebar">
+            <van-sidebar-item v-for="item in areaMap" :key="item.value" :title="item.title" />
+        </van-sidebar>
+      </van-sticky>
     </div>
     <div class="right-area">
-      <van-tabs v-model:active="typeIndex" @change="handleChangeTab">
-        <van-tab v-for="item in typeMap" :key="item.value" :title="item.title"></van-tab>
-      </van-tabs>
+      <van-sticky offset-top="48px">
+        <van-tabs v-model:active="typeIndex" @change="handleChangeTab">
+          <van-tab v-for="item in typeMap" :key="item.value" :title="item.title"></van-tab>
+        </van-tabs>
+      </van-sticky>
       <van-list
         :loading="listLoading"
         @load="handleLoadList"
@@ -17,7 +23,7 @@
         finished-text="没有更多了"
       >
         <van-cell v-for="item in artistsList" :key="item.id">
-          <artist-item :data="item"></artist-item>
+          <artist-item :data="item" @click="handleClickDetail(item.id)"></artist-item>
         </van-cell>
       </van-list>
     </div>
@@ -26,6 +32,7 @@
 
 <script lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 /* 引入api */
 import { getArtistsList } from '@/api/artist' // 引入接口
@@ -37,11 +44,13 @@ import ArtistItem from '@/components/ArtistItem/index.vue'
 import TopNav from '@/components/TopNav/index.vue'
 
 export default {
-  name: 'Artists',
+  name: 'ArtistsList',
 
   components: { ArtistItem, TopNav },
 
   setup() {
+    const router = useRouter()
+    
     const typeMap = {
       0: { title: '全部', value: -1 },
       1: { title: '男歌手', value: 1 },
@@ -131,6 +140,16 @@ export default {
       listArtists(query)
     }
 
+    /**
+     * 歌手行的点击事件处理: 跳转到对应的歌手详情页面
+     */
+    const handleClickDetail = (id: number) => {
+      router.push({
+        name: 'ArtistDetail',
+        query: { id }
+      })
+    }
+
     return {
       /* data */
       areaMap,
@@ -147,7 +166,8 @@ export default {
       listArtists,
       handleLoadList,
       handleChangeSidebar,
-      handleChangeTab
+      handleChangeTab,
+      handleClickDetail
     }
   }
 }

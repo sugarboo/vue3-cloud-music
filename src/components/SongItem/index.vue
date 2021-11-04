@@ -1,6 +1,6 @@
 <template>
   <div class="song-item">
-    <van-image :src="data.album.blurPicUrl || ''" alt="cover"></van-image>
+    <van-image fit="cover" :src="data.album.blurPicUrl + '?param=100y100' || ''" alt="cover"></van-image>
     <div class="text-wrap">
       <div class="name single-line">{{ data.name }}</div>
       <div class="artists single-line">
