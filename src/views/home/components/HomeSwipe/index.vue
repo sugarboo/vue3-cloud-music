@@ -9,9 +9,12 @@
         :key="item.imageUrl"
       >
         <van-image fit="cover" :src="item.imageUrl || ''" alt="swipe">
-          <div :class="['banner-tag', item.typeTitle === '新歌首发' ? 'bg-color-red' : 'bg-color-blue']">
+          <div :class="['banner-tag', item.typeTitle.startsWith('新') ? 'bg-color-red' : 'bg-color-blue']">
             <span>{{ item.typeTitle }}</span>
           </div>
+          <template v-slot:loading>
+            <van-loading type="spinner" size="20" />
+          </template>
         </van-image>
       </van-swipe-item>
     </van-swipe>

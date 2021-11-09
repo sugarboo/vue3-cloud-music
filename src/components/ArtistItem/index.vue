@@ -1,6 +1,10 @@
 <template>
   <div class="artist-item">
-    <van-image round fit="cover" :src="data.picUrl + '?param=100y100' || ''" />
+    <van-image round fit="cover" :src="data.picUrl + '?param=100y100' || ''" lazy-load>
+      <template v-slot:loading>
+        <van-loading type="spinner" size="20" />
+      </template>
+    </van-image>
     <div class="text-wrap">
       <div class="name single-line">
         <span>{{ data.name }}</span>

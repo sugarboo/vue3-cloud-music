@@ -6,8 +6,9 @@ import './less/global.less'
 
 /* 引入Vant */
 import Vant from 'vant'
+import { Lazyload } from 'vant'
 import 'vant/lib/index.css'
 
 import router from './router/index.ts'
 
-createApp(App).use(router).use(Vant).mount('#app')
+createApp(App).use(router).use(Vant).use(Lazyload).mount('#app')

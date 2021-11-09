@@ -1,6 +1,10 @@
 <template>
   <div class="song-item">
-    <van-image fit="cover" :src="data.album.blurPicUrl + '?param=100y100' || ''" alt="cover"></van-image>
+    <van-image fit="cover" :src="data.album.blurPicUrl + '?param=100y100' || ''" alt="cover" lazy-load>
+      <template v-slot:loading>
+        <van-loading type="spinner" size="20" />
+      </template>
+    </van-image>
     <div class="text-wrap">
       <div class="name single-line">{{ data.name }}</div>
       <div class="artists single-line">
@@ -39,6 +43,9 @@ export default {
   }
   .text-wrap {
     text-align: end;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     .name, .artists {
       max-width: 200px;
     }

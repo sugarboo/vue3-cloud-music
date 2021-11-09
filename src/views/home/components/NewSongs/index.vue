@@ -56,7 +56,7 @@ export default {
      * van-list触底时的事件处理
      */
     const handleLoadList = () => {
-      if (allList.value.length === 0) {
+      if (!allList.value.length) {
         listNewSongs().then(() => {
           loadList()
         })

@@ -21,3 +21,21 @@ export function getArtistDetail(query: number) {
     }
   })
 }
+
+/* 歌手详情页 - 根据id获取歌手歌曲列表 */
+export function getArtistSongsList(query) {
+  return request({
+    url: '/artist/songs',
+    method: 'GET',
+    params: query
+  })
+}
+
+/* 歌手详情页 - 根据id获取歌手专辑列表 */
+export function getArtistAlbumsList(query) {
+  return request({
+    url: '/artist/album',
+    method: 'GET',
+    params: query
+  })
+}

@@ -2,7 +2,7 @@
   <div class="component-container">
     <van-nav-bar :title="title">
       <template #left>
-        <div class="home-btn" @click="handleClickBack">
+        <div class="back-btn" @click="handleClickBack">
           <van-icon style="color: #dd001e; font-weight: 600; zoom: 1.1;" name="arrow-left" />
         </div>
       </template>
@@ -26,7 +26,7 @@ export default {
 
     /* methods */
     /**
-     * 首页按钮的点击事件处理
+     * 返回按钮的点击事件处理
      */
     const handleClickBack = () => {
       router.back() // === $router.go(-1)
@@ -43,7 +43,7 @@ export default {
 
 <style lang="less" scoped>
 .component-container {
-  .home-btn {
+  .back-btn {
     font-size: 20px;
   }
 }

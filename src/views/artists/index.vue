@@ -70,7 +70,7 @@ export default {
     const typeIndex = ref(0) // 歌手类型序号, 默认为全部(0)
     const areaIndex = ref(0) // 地区序号, 默认为全部(0)
     const limit = 20
-    let page = 1 // 当前页码, 默认为1(第一页)
+    let page = -1 // 当前页码, 默认为-1(第一页)
     
     const query = {
       type: typeMap[typeIndex.value].value,
@@ -92,18 +92,13 @@ export default {
       try {
         const res = await getArtistsList(query)
         const { artists, more } = res
-        if (artistsList.value.length) {
-          artistsList.value = [...artistsList.value, ...artists]
-        } else {
-          artistsList.value = artists
-        }
+        artistsList.value = [...artistsList.value, ...artists]
         hasMore.value = more
         listLoading.value = false
       } catch (error) {
         hasMore.value = false
         listLoading.value = false
         console.log(error)
-        
       }
     }
 
@@ -123,7 +118,7 @@ export default {
      */
     const handleChangeSidebar = () => {
       artistsList.value.length = 0
-      page = 1
+      page = 0 // 重置页码
       query.offset = page * limit
       query.area = areaMap[areaIndex.value].value
       listArtists(query)
@@ -134,7 +129,7 @@ export default {
      */
     const handleChangeTab = () => {
       artistsList.value.length = 0
-      page = 1
+      page = 0 // 重置页码
       query.offset = page * limit
       query.type = typeMap[typeIndex.value].value
       listArtists(query)
