@@ -1,16 +1,16 @@
-import axios from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { Toast } from 'vant' // Vant轻提示组件
 
 axios.defaults.withCredentials = true // axios跨域处理: 允许跨域携带cookie信息
 
-const service = axios.create({
+const service: AxiosInstance | any = axios.create({
   baseURL: 'http://localhost:3000',
   timeout: 10000
 })
 
 // Request interceptors
 service.interceptors.request.use(
-  config => {
+  (config: AxiosRequestConfig | any) => {
     // Add X-Access-Token header to every request, you can add other custom headers here
   
     // if (UserModule.token) {
@@ -21,14 +21,14 @@ service.interceptors.request.use(
     // config.headers["Access-Control-Allow-Methods"] = "GET,POST"
     return config
   },
-  error => {
+  (error: any) => {
     Promise.reject(error)
   }
 )
 
 // Response interceptors
 service.interceptors.response.use(
-  response => {
+  (response: AxiosResponse | any) => {
     // Some example codes here:
     // code == 20000: success
     // code == 50001: invalid access token
@@ -37,7 +37,7 @@ service.interceptors.response.use(
     // code == 50004: invalid user (user not exist)
     // code == 50005: username or password is incorrect
     // You can change this part for your own usage.
-    const res = response.data
+    const res: any = response.data
     if (res.code !== 200) {
       Toast.fail({
         message: res.message || 'Error',
@@ -54,7 +54,7 @@ service.interceptors.response.use(
       return response.data
     }
   },
-  error => {
+  (error: any) => {
     Toast.fail({
       message: error.message,
     })

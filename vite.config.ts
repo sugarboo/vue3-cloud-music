@@ -21,6 +21,8 @@ export default defineConfig({
   ],
 
   resolve: {
+    /* 配置扩展名 */
+    extensions: ['.js', '.vue', '.json', '.ts'],
     /* 配置@别名 */
     alias: {
       "@": path.resolve(__dirname, "src")

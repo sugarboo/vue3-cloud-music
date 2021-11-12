@@ -94,108 +94,85 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { getSearchSuggest } from '@/api/home'
 
-export default {
-  name: 'SearchBar',
-  setup() {
-    const router = useRouter()
+const router = useRouter()
 
-    /* data */
-    const keywords = ref('')
-    const show = ref(false)
-    const hasSuggest = ref(false)
-    const searchSuggestAlbums = ref([])
-    const searchSuggestArtists = ref([])
-    const searchSuggestSongs = ref([])
+/* data */
+const keywords = ref('')
+const show = ref(false)
+const hasSuggest = ref(false)
+const searchSuggestAlbums = ref([])
+const searchSuggestArtists = ref([])
+const searchSuggestSongs = ref([])
 
-    /* methods */
-    /**
-     * SearchBar的点击事件处理 
-     */
-    const handleClickSearchBar = () => {
-      show.value = true
-    }
+/* methods */
+/**
+ * SearchBar的点击事件处理 
+ */
+const handleClickSearchBar = () => {
+  show.value = true
+}
 
-    /**
-     * SearchBar清除时的事件处理
-     */
-    const handleClearSearchBar = () => {
+/**
+ * SearchBar清除时的事件处理
+ */
+const handleClearSearchBar = () => {
+  hasSuggest.value = false
+}
+
+/**
+ * 搜索弹出层关闭时的事件处理
+ */
+const handleClosePopup = () => {
+  keywords.value = ''
+  show.value = false
+  hasSuggest.value = false
+}
+
+/**
+ * 获取搜索建议
+ */
+const listSearchSuggest = async () => {
+  const query = keywords.value
+  if (query) {
+    try {
+      const res: any = await getSearchSuggest(query)
+      const { albums, artists, songs } = res.result
+      searchSuggestAlbums.value = albums
+      searchSuggestArtists.value = artists
+      searchSuggestSongs.value = songs && songs.length > 3 ? songs.slice(0, 3) : songs // 出于页面美观度考虑, 仅保留3条单曲搜索结果
+      hasSuggest.value = true
+    } catch (error) {
       hasSuggest.value = false
+      console.log(error)
     }
-    
-    /**
-     * 搜索弹出层关闭时的事件处理
-     */
-    const handleClosePopup = () => {
-      keywords.value = ''
-      show.value = false
-      hasSuggest.value = false
-    }
-
-    /**
-     * 获取搜索建议
-     */
-    const listSearchSuggest = async () => {
-      const query = keywords.value
-      if (query) {
-        try {
-          const res = await getSearchSuggest(query)
-          const { albums, artists, songs } = res.result
-          searchSuggestAlbums.value = albums
-          searchSuggestArtists.value = artists
-          searchSuggestSongs.value = songs && songs.length > 3 ? songs.slice(0, 3) : songs // 出于页面美观度考虑, 仅保留3条单曲搜索结果
-          hasSuggest.value = true
-        } catch (error) {
-          hasSuggest.value = false
-          console.log(error)
-        }
-      } else {
-        hasSuggest.value = false
-      }
-    }
-
-    /**
-     * 歌手按钮的点击事件处理
-     */
-    const handleClickCategoryArtists = () => {
-      router.push({
-        name: 'Artists'
-      })
-    }
-
-    /**
-     * 搜索结果中的歌手点击事件处理
-     */
-    const handleClickSearchArtist = (id: number) => {
-      router.push({
-        name: 'ArtistDetail',
-        query: { id }
-      })
-    }
-
-    return {
-      /* data */
-      keywords,
-      show,
-      hasSuggest,
-      searchSuggestAlbums,
-      searchSuggestArtists,
-      searchSuggestSongs,
-
-      /* methods */
-      handleClickSearchBar,
-      handleClearSearchBar,
-      handleClosePopup,
-      listSearchSuggest,
-      handleClickCategoryArtists,
-      handleClickSearchArtist
-    }
+  } else {
+    hasSuggest.value = false
   }
+}
+
+/**
+ * 歌手按钮的点击事件处理
+ */
+const handleClickCategoryArtists = () => {
+  router.push({
+    name: 'ArtistsList'
+  })
+}
+
+/**
+ * 搜索结果中的歌手点击事件处理
+ */
+const handleClickSearchArtist = (id: number) => {
+  router.push({
+    name: 'ArtistDetail',
+    query: { id }
+  })
 }
 </script>
 

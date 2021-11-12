@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
 
-import Layout from '@/views/layout/index.vue'
+import Layout from '@/views/layout/Layout.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -13,7 +13,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'home',
         name: 'Home',
-        component: () => import('@/views/home/index.vue')
+        component: () => import('@/views/home/Home.vue')
       },
       
     ]
@@ -22,14 +22,14 @@ const routes: Array<RouteRecordRaw> = [
   /* 歌手 - 列表页 */
   {
     path: '/artists',
-    name: 'Artists',
-    component: () => import('@/views/artists/index.vue')
+    name: 'ArtistsList',
+    component: () => import('@/views/artists/ArtistsList.vue')
   },
   /* 歌手 - 详情页 */
   {
     path: '/artists/detail',
     name: 'ArtistDetail',
-    component: () => import('@/views/artists/detail.vue')
+    component: () => import('@/views/artists/ArtistDetail.vue')
   }
 ]
 

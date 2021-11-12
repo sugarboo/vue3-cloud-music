@@ -10,34 +10,20 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { useRouter } from 'vue-router'
-export default {
-  name: 'TopNav',
-  props: {
-    // 顶部导航栏标题
-    title: {
-      type: String,
-      require: true
-    }
-  },
-  setup() {
-    const router = useRouter()
 
-    /* methods */
-    /**
-     * 返回按钮的点击事件处理
-     */
-    const handleClickBack = () => {
-      router.back() // === $router.go(-1)
-    }
+const props = withDefaults(defineProps<{
+  title: string // 顶部导航栏标题
+}>(), { title: '' })
+const router = useRouter()
 
-    return {
-      /* methods */
-      handleClickBack,
-      router
-    }
-  }
+/* methods */
+/**
+ * 返回按钮的点击事件处理
+ */
+const handleClickBack = () => {
+  router.back() // === $router.go(-1)
 }
 </script>
 

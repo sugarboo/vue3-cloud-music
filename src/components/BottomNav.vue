@@ -23,18 +23,11 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { ref } from 'vue'
 
-export default {
-  name: 'BottomNav',
-  setup() {
-    const active = ref('home')
-    return {
-      active
-    }
-  }
-}
+/* data */
+const active = ref('home')
 </script>
 
 <style lang="less" scoped>

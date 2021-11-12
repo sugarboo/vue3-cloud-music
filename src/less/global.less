@@ -27,3 +27,11 @@ div {
   overflow: hidden;/* 规定超出内容宽度的元素隐藏 */
   text-overflow: ellipsis; /* 超出部分以省略号形式显示 */
 }
+
+.double-line {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; // 最多显示两行
+  overflow: hidden;
+  text-overflow: ellipsis; /* 超出部分以省略号形式显示 */
+}

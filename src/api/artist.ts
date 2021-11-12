@@ -1,9 +1,9 @@
 import request from '@/utils/request'
 
-import { queryProps } from '@/interface/artists'
+import { ListQuery, SongsListQuery, AlbumsListQuery } from '@/interface/artists'
 
 /* 歌手列表页 - 获取歌手列表 */
-export function getArtistsList(query: queryProps) {
+export function getArtistsList(query: ListQuery) {
   return request({
     url: '/artist/list',
     method: 'GET',
@@ -23,7 +23,7 @@ export function getArtistDetail(query: number) {
 }
 
 /* 歌手详情页 - 根据id获取歌手歌曲列表 */
-export function getArtistSongsList(query) {
+export function getArtistSongsList(query: SongsListQuery) {
   return request({
     url: '/artist/songs',
     method: 'GET',
@@ -32,7 +32,7 @@ export function getArtistSongsList(query) {
 }
 
 /* 歌手详情页 - 根据id获取歌手专辑列表 */
-export function getArtistAlbumsList(query) {
+export function getArtistAlbumsList(query: AlbumsListQuery) {
   return request({
     url: '/artist/album',
     method: 'GET',

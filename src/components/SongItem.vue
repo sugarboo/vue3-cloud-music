@@ -17,17 +17,11 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'SongItem',
-  props: {
-    /* 歌曲数据 */
-    data: {
-      type: Object,
-      require: true
-    }
-  }
-}
+<script setup lang="ts">
+import { SongItem } from '@/interface/home'
+const props = defineProps<{
+  data: SongItem // 歌曲信息
+}>()
 </script>
 
 <style lang="less" scoped>

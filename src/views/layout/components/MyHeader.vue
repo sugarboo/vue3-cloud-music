@@ -4,22 +4,13 @@
       <span class="iconfont icon-hamberger"></span>
     </div> -->
     <div class="searchbar-container">
-      <search-bar></search-bar>
+      <SearchBar />
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import SearchBar from '@/components/SearchBar/index.vue'
-export default {
-  name: 'MyHeader',
-  components: { SearchBar },
-  setup() {
-    return {
-
-    }
-  }
-}
+<script setup lang="ts">
+import SearchBar from '@/components/SearchBar.vue'
 </script>
 
 <style lang="less" scoped>

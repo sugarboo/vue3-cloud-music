@@ -5,11 +5,11 @@
       :autoplay="5000"
     >
       <van-swipe-item
-        v-for="item in images" 
+        v-for="item in banners" 
         :key="item.imageUrl"
       >
         <van-image fit="cover" :src="item.imageUrl || ''" alt="swipe">
-          <div :class="['banner-tag', item.typeTitle.startsWith('新') ? 'bg-color-red' : 'bg-color-blue']">
+          <div :class="['banner-tag', `bg-color-${item.titleColor}`]">
             <span>{{ item.typeTitle }}</span>
           </div>
           <template v-slot:loading>
@@ -21,16 +21,31 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'HomeSwiper',
-  props: {
-    images: {
-      type: Array,
-      require: true
-    }
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { getBannersList } from '@/api/home' // 引入接口
+
+import { Banner } from '@/interface/home'
+
+/* data */
+let banners = ref<Banner[]>([]) // 轮播图数据
+
+/* methods */
+/**
+  * 获取轮播图数据
+  */
+const listBanners = async () => {
+  try {
+    const res: any = await getBannersList()
+    banners.value = res.banners
+  } catch (error) {
+    console.log(error)
   }
 }
+
+onMounted(() => {
+  listBanners()
+})
 </script>
 
 <style lang="less" scoped>
