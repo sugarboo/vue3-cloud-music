@@ -6,13 +6,22 @@
     finished-text="没有更多了"
   >
     <van-cell-group inset class="cell-group-card">
-      <van-cell v-for="item in list" :key="item.id" :title="item.name" :label="getSongsArtistsNames(item.ar)" class="single-line" />
+      <van-cell
+        v-for="item in list"
+        :key="item.id"
+        :title="item.name"
+        :label="getSongsArtistsNames(item.ar)"
+        class="single-line"
+        @click="handlePlaySong(item.id)"
+      />
     </van-cell-group>
   </van-list>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+
+import { useRouter } from 'vue-router'
 
 import { getArtistSongsList } from '@/api/artist'
 
@@ -21,6 +30,8 @@ import { SongsListQuery, SongItem, SongsAr } from '@/interface/artists'
 const props = defineProps<{
   id: number // 歌手id
 }>()
+
+const router = useRouter()
 
 /* data */
 const { id } = props
@@ -68,6 +79,14 @@ const getSongsArtistsNames = (artistsList: Array<SongsAr>) => {
     names += index === artistsList.length - 1 ? item.name : `${item.name} / `
   })
   return names
+}
+
+/* 歌曲点击的事件处理: 跳转到歌曲播放页 */
+const handlePlaySong = (id: number) => {
+  router.push({
+    name: 'SongPlayer',
+    params: { id }
+  })
 }
 
 onMounted(() => {

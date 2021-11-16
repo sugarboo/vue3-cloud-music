@@ -60,29 +60,29 @@
                 <span>专辑</span>
               </div>
               <van-list>
-                <van-cell class="single-line" v-for="item in searchSuggestAlbums" :key="item.id" is-link>
+                <van-cell class="single-line" v-for="item in searchSuggestAlbums" :key="item.id" is-link @click="handleClickSearchAlbum(item.id)">
                   <span>{{ item.name }}</span>
                   <span> - </span>
-                  <span>{{ item.artist.name }}</span>
+                  <span>{{ item.artist ? item.artist.name : '' }}</span>
                 </van-cell>
               </van-list>
             </div>
           </div>
         </div>
         <div class="category-area">
-          <div class="category-item" @click="handleClickCategoryArtists">
+          <div class="category-item" @click="handleClickCategory('ArtistsList')">
             <van-button round>
               <span class="iconfont icon-mic"></span>
             </van-button>
             <span class="category-title">歌手</span>
           </div>
-          <div class="category-item">
+          <div class="category-item" @click="handleClickCategory('VideoList')">
             <van-button round>
               <span class="iconfont icon-video"></span>
             </van-button>
-            <span class="category-title">MV</span>
+            <span class="category-title">视频</span>
           </div>
-          <div class="category-item" @click="handleClickRank">
+          <div class="category-item" @click="handleClickCategory('RankList')">
             <van-button round>
               <span class="iconfont icon-rank"></span>
             </van-button>
@@ -100,15 +100,17 @@ import { useRouter } from 'vue-router'
 
 import { getSearchSuggest } from '@/api/home'
 
+import { Ar, Al, Song } from '@/interface/index'
+
 const router = useRouter()
 
 /* data */
 const keywords = ref('')
 const show = ref(false)
 const hasSuggest = ref(false)
-const searchSuggestAlbums = ref([])
-const searchSuggestArtists = ref([])
-const searchSuggestSongs = ref([])
+const searchSuggestAlbums = ref<Array<Al>>([])
+const searchSuggestArtists = ref<Array<Ar>>([])
+const searchSuggestSongs = ref<Array<Song>>([])
 
 /* methods */
 /* SearchBar的点击事件处理 */
@@ -148,24 +150,23 @@ const listSearchSuggest = async () => {
   }
 }
 
-/* 歌手按钮的点击事件处理 */
-const handleClickCategoryArtists = () => {
-  router.push({
-    name: 'ArtistsList'
-  })
-}
-
-/* 排行榜按钮的点击事件处理 */
-const handleClickRank = () => {
-  router.push({
-    name: 'Rank'
-  })
+/* 分类按钮(歌手 / 视频 / 排行榜)的点击事件处理  */
+const handleClickCategory = (routerName: string) => {
+  router.push({ name: routerName })
 }
 
 /* 搜索结果中的歌手点击事件处理 */
 const handleClickSearchArtist = (id: number) => {
   router.push({
     name: 'ArtistDetail',
+    query: { id }
+  })
+}
+
+/* 搜索结果中的专辑点击事件处理 */
+const handleClickSearchAlbum = (id: number) => {
+  router.push({
+    name: 'AlbumDetail',
     query: { id }
   })
 }

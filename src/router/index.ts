@@ -34,7 +34,7 @@ const routes: Array<RouteRecordRaw> = [
   /* 排行榜 - 列表页 */
   {
     path: '/rank',
-    name: 'Rank',
+    name: 'RankList',
     component: () => import('@/views/rank/RankList.vue')
   },
   /* 排行榜 - 详情页 */
@@ -42,7 +42,25 @@ const routes: Array<RouteRecordRaw> = [
     path: '/rank/detail',
     name: 'RankDetail',
     component: () => import('@/views/rank/RankDetail.vue')
-  }
+  },
+  /* 专辑 - 详情页 */
+  {
+    path: '/album/detail',
+    name: 'AlbumDetail',
+    component: () => import('@/views/album/AlbumDetail.vue')
+  },
+  /* 视频 - 列表页 */
+  {
+    path: '/video',
+    name: 'VideoList',
+    component: () => import('@/views/video/VideoList.vue')
+  },
+  /* 音乐播放页 */
+  {
+    path: '/player',
+    name: 'SongPlayer',
+    component: () => import('@/views/player/SongPlayer.vue')
+  },
 ]
 
 const router = createRouter({

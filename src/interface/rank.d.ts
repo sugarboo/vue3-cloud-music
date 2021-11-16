@@ -19,6 +19,6 @@ export interface Track {
   name: string
   ar: Array<Ar>
   artists: Array<Ar>
-  al: Al,
+  al: Al
   album: Al
 }

@@ -1,24 +1,22 @@
 <template>
-  <div class="component-container">
-    <van-swipe
-      :show-indicators="false"
-      :autoplay="5000"
+  <van-swipe
+    :show-indicators="false"
+    :autoplay="5000"
+  >
+    <van-swipe-item
+      v-for="item in banners" 
+      :key="item.imageUrl"
     >
-      <van-swipe-item
-        v-for="item in banners" 
-        :key="item.imageUrl"
-      >
-        <van-image fit="cover" :src="item.imageUrl || ''" alt="swipe">
-          <div :class="['banner-tag', `bg-color-${item.titleColor}`]">
-            <span>{{ item.typeTitle }}</span>
-          </div>
-          <template v-slot:loading>
-            <van-loading type="spinner" size="20" />
-          </template>
-        </van-image>
-      </van-swipe-item>
-    </van-swipe>
-  </div>
+      <van-image fit="cover" :src="item.imageUrl || ''" alt="swipe">
+        <div :class="['banner-tag', `bg-color-${item.titleColor}`]">
+          <span>{{ item.typeTitle }}</span>
+        </div>
+        <template v-slot:loading>
+          <van-loading type="spinner" size="20" />
+        </template>
+      </van-image>
+    </van-swipe-item>
+  </van-swipe>
 </template>
 
 <script setup lang="ts">

@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container" v-if="artistDetail.artist">
+  <div v-if="artistDetail.artist">
     <CoverItem :src="artistDetail.artist.cover" :name="artistDetail.artist.name" />
     <div class="tabs-area">
       <van-tabs v-model:active="tabIndex">
@@ -82,15 +82,12 @@ onMounted(() => {
 </script>
 
 <style lang="less" scoped>
-
-.app-container {
-  .tabs-area {
-    :deep(.van-badge) {
-      zoom: 0.88;
-    }
+.tabs-area {
+  :deep(.van-badge) {
+    zoom: 0.88;
   }
-  .cell-group-card, :deep(.van-list .cell-group-card) {
-    margin: 16px;
-  }
+}
+.cell-group-card, :deep(.van-list .cell-group-card) {
+  margin: 16px;
 }
 </style>

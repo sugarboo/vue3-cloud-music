@@ -1,5 +1,5 @@
 <template>
-  <div class="song-item">
+  <div class="song-item" @click="handlePlaySong(data.id)">
     <van-image fit="cover" :src="data.album.blurPicUrl || data.album.picUrl + '?param=100y100' || ''" alt="cover" lazy-load>
       <template v-slot:loading>
         <van-loading type="spinner" size="20" />
@@ -18,10 +18,23 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
+
 import { SongItem } from '@/interface/home'
+
 const props = defineProps<{
   data: SongItem // 歌曲信息
 }>()
+
+const router = useRouter()
+
+/* 点击歌曲, 跳转到音乐播放页面 */
+const handlePlaySong = (id: number) => {
+  router.push({
+    name: 'SongPlayer',
+    params: { id }
+  })
+}
 </script>
 
 <style lang="less" scoped>

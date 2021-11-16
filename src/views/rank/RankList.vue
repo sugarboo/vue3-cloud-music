@@ -1,16 +1,14 @@
 <template>
-  <div class="app-container">
-    <van-sticky>
-      <TopNav title="排行榜" />
-    </van-sticky>
-    <div class="main-area">
-      <van-row>
-        <van-col v-for="item in list" :key="item.id" span="8"  class="rank-item-col" @click="handleClickRankItem(item.id)">
-          <van-image class="cover" :src="item.coverImgUrl + '?param=100y100'"></van-image>
-          <div class="name single-line">{{ item.name }}</div>
-        </van-col>
-      </van-row>
-    </div>
+  <van-sticky>
+    <TopNav title="排行榜" />
+  </van-sticky>
+  <div class="main-area">
+    <van-row>
+      <van-col v-for="item in list" :key="item.id" span="8"  class="rank-item-col" @click="handleClickRankItem(item.id)">
+        <van-image class="cover" :src="item.coverImgUrl + '?param=100y100'"></van-image>
+        <div class="name single-line">{{ item.name }}</div>
+      </van-col>
+    </van-row>
   </div>
 </template>
 
@@ -51,20 +49,18 @@ onMounted(() => {
 </script>
 
 <style lang="less" scoped>
-.app-container {
-  .main-area {
-    text-align: center;
-    .rank-item-col {
-      margin-top: 16px;
-      .cover {
-        :deep(.van-image__img) {
-          border-radius: 10px;
-        }
+.main-area {
+  text-align: center;
+  .rank-item-col {
+    margin-top: 16px;
+    .cover {
+      :deep(.van-image__img) {
+        border-radius: 10px;
       }
-      .name {
-        font-size: 12px;
-        color: #666666;
-      }
+    }
+    .name {
+      font-size: 12px;
+      color: #666666;
     }
   }
 }

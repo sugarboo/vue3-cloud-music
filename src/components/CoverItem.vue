@@ -1,7 +1,8 @@
 <template>
   <van-image class="main-pic" :src="src + '?param=1024y1024'" fit="cover">
     <div class="name single-line">
-      <span>{{ name || '' }}</span>
+      <div class="sub-name">{{ subName || '' }}</div>
+      <div>{{ name || '' }}</div>
     </div>
     <div class="back-btn" @click="handleClickBack">
       <van-icon style="color: #FFFFFF; font-weight: 600; zoom: 1.1;" name="arrow-left" />
@@ -18,6 +19,7 @@ import router from '@/router'
 const props = defineProps<{
   src: string,  // 封面图片url
   name: string // 名字
+  subName?: string // 二级名字
 }>()
 
 const handleClickBack = () => {
@@ -40,6 +42,12 @@ const handleClickBack = () => {
     letter-spacing: -2px;
     color: #ffffff;
     font-family: 'Noto Sans SC', sans-serif;
+    .sub-name {
+      text-align: end;
+      font-size: 24px;  
+      letter-spacing: -1px;
+      color: #f6f6f6;
+    }
   }
   .back-btn {
     position: absolute;

@@ -1,7 +1,7 @@
 /* 首页 - 轮播图 */
 export interface Banner {
-  imageUrl: string, // 轮播图url
-  titleColor: string, // 轮播图标签颜色
+  imageUrl: string // 轮播图url
+  titleColor: string // 轮播图标签颜色
   typeTitle: string // 轮播图标签标题
 }
 
@@ -13,7 +13,7 @@ export interface SongItem {
     name: string
   }>
   album: {
-    blurPicUrl?: string,
+    blurPicUrl?: string
     picUrl?: string
   }
 }

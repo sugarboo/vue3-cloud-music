@@ -6,7 +6,7 @@
       finished-text="没有更多了"
     >
       <van-cell-group inset class="cell-group-card">
-          <van-cell v-for="item in list" :key="item.id" :value="item.name">
+          <van-cell v-for="item in list" :key="item.id" :value="item.name" @click="handleClickAlbum(item.id)">
             <template #title>
               <van-image :src="item.blurPicUrl + '?param=100y100' || ''" alt="cover" lazy-load>
                 <template v-slot:loading>
@@ -17,7 +17,7 @@
             <template #value>
               <div class="name-and-date">
                 <div class="name">{{ item.name }}</div>
-                <div class="date">{{ FormatPublishTime(item.publishTime) }}</div>
+                <div class="date">{{ formatPublishTime(item.publishTime) }}</div>
               </div>
             </template>
           </van-cell>
@@ -27,6 +27,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 import { getArtistAlbumsList } from '@/api/artist'
 
@@ -35,6 +36,8 @@ import { AlbumsListQuery, AlbumItem } from '@/interface/artists'
 const props = defineProps<{
   id: number // 歌手id
 }>()
+
+const router = useRouter()
 
 /* data */
 const id = props.id
@@ -74,8 +77,16 @@ const handleLoadList = () => {
 }
 
 /*专辑发行时间格式处理 */
-const FormatPublishTime = (time: string) => {
+const formatPublishTime = (time: string) => {
   return new Date(time).toLocaleString('chinese', { 'hour12': false }).split(' ')[0].split('/').join('-')
+}
+
+/* 专辑的点击事件处理 */
+const handleClickAlbum = (id: number) => {
+  router.push({
+    name: 'AlbumDetail',
+    query: { id }
+  })
 }
 
 onMounted(() => {
