@@ -49,9 +49,7 @@ const hasMore = ref(true)
 const listLoading = ref(false)
 
 /* methods */
-/**
- * 发送请求, 获取专辑列表
- */
+/* 发送请求, 获取专辑列表 */
 const listAlbums = async (query: AlbumsListQuery) => {
   listLoading.value = true
   try {
@@ -66,9 +64,7 @@ const listAlbums = async (query: AlbumsListQuery) => {
     console.log(error)
   }
 }
-/**
- * van-list触底时的事件处理: 专辑列表 加载更多
- */
+/* van-list触底时的事件处理: 专辑列表 加载更多 */
 const handleLoadList = () => {
   if (hasMore.value) {
     page++
@@ -77,9 +73,7 @@ const handleLoadList = () => {
   }
 }
 
-/** 
- * 专辑发行时间格式处理
- */
+/*专辑发行时间格式处理 */
 const FormatPublishTime = (time: string) => {
   return new Date(time).toLocaleString('chinese', { 'hour12': false }).split(' ')[0].split('/').join('-')
 }

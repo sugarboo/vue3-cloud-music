@@ -1,6 +1,6 @@
 <template>
   <div class="song-item">
-    <van-image fit="cover" :src="data.album.blurPicUrl + '?param=100y100' || ''" alt="cover" lazy-load>
+    <van-image fit="cover" :src="data.album.blurPicUrl || data.album.picUrl + '?param=100y100' || ''" alt="cover" lazy-load>
       <template v-slot:loading>
         <van-loading type="spinner" size="20" />
       </template>

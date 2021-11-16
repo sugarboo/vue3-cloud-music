@@ -1,16 +1,6 @@
 <template>
   <div class="app-container" v-if="artistDetail.artist">
-    <van-image class="main-pic" :src="artistDetail.artist.cover + '?param=1024y1024'" fit="cover">
-      <div class="artist-name single-line">
-        <span>{{ artistDetail.artist.name || '' }}</span>
-      </div>
-      <div class="back-btn" @click="handleClickBack">
-        <van-icon style="color: #FFFFFF; font-weight: 600; zoom: 1.1;" name="arrow-left" />
-      </div>
-      <template v-slot:loading>
-        <van-loading type="spinner" size="40" />
-      </template>
-    </van-image>
+    <CoverItem :src="artistDetail.artist.cover" :name="artistDetail.artist.name" />
     <div class="tabs-area">
       <van-tabs v-model:active="tabIndex">
         <van-tab v-for="item in tabMap" 
@@ -37,6 +27,7 @@ import { Toast } from 'vant'
 import ArtistInfo from './components/ArtistInfo.vue'
 import SongsList from './components/SongsList.vue'
 import AlbumsList from './components/AlbumsList.vue'
+import CoverItem from '@/components/CoverItem.vue'
 
 import { getArtistDetail } from '@/api/artist'
 
@@ -58,9 +49,7 @@ const artistDetail = ref(<ArtistDetail>{})
 const tabIndex = ref(0)
 
 /* methods */
-/**
- * 根据id, 获取歌手详情
- */
+/* 根据id, 获取歌手详情 */
 const detailArtist = async (id: number) => {
   try {
     const res: any = await getArtistDetail(id)
@@ -71,17 +60,13 @@ const detailArtist = async (id: number) => {
   }
 }
 
-/**
- * 歌手id为空或对应该id的歌手不存在时的事件处理
- */
+/* 歌手id为空或对应该id的歌手不存在时的事件处理 */
 const handleNotFound = () => {
   Toast.fail('歌手不存在')
   router.back()
 }
 
-/**
- * 返回按钮的点击事件处理
- */
+/* 返回按钮的点击事件处理 */
 const handleClickBack = () => {
   router.back() // === $router.go(-1)
 }
@@ -99,32 +84,10 @@ onMounted(() => {
 <style lang="less" scoped>
 
 .app-container {
-  .main-pic {
-    width: 100%;
-    height: 305px;
-    position: relative;
-    .back-btn {
-      position: absolute;
-      top: 14px;
-      left: 14px;
-      font-size: 20px;
-    }
-  }
   .tabs-area {
     :deep(.van-badge) {
       zoom: 0.88;
     }
-  }
-  .artist-name {
-    position: absolute;
-    bottom: 0px;
-    right: 8px;
-    z-index: 1000;
-    font-size: 40px;
-    font-weight: 700;
-    letter-spacing: -2px;
-    color: #ffffff;
-    font-family: 'Noto Sans SC', sans-serif;
   }
   .cell-group-card, :deep(.van-list .cell-group-card) {
     margin: 16px;

@@ -31,9 +31,7 @@ import { Banner } from '@/interface/home'
 let banners = ref<Banner[]>([]) // 轮播图数据
 
 /* methods */
-/**
-  * 获取轮播图数据
-  */
+/* 获取轮播图数据 */
 const listBanners = async () => {
   try {
     const res: any = await getBannersList()

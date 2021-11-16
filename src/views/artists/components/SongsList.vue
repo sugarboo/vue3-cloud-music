@@ -36,9 +36,7 @@ const query = {
 const hasMore = ref(true)
 const listLoading = ref(false)
 /* methods */
-/**
- * 发送请求, 获取歌曲列表
- */
+/* 发送请求, 获取歌曲列表 */
 const listSongs = async (query: SongsListQuery) => {
   listLoading.value = true
   try {
@@ -54,9 +52,7 @@ const listSongs = async (query: SongsListQuery) => {
   }
 }
 
-/**
- * van-list触底时的事件处理: 歌曲列表 加载更多
- */
+/* van-list触底时的事件处理: 歌曲列表 加载更多 */
 const handleLoadList = () => {
   if (hasMore.value) {
     page++

@@ -13,6 +13,7 @@ export interface SongItem {
     name: string
   }>
   album: {
-    blurPicUrl: string
+    blurPicUrl?: string,
+    picUrl?: string
   }
 }

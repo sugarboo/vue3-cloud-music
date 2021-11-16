@@ -82,7 +82,7 @@
             </van-button>
             <span class="category-title">MV</span>
           </div>
-          <div class="category-item">
+          <div class="category-item" @click="handleClickRank">
             <van-button round>
               <span class="iconfont icon-rank"></span>
             </van-button>
@@ -111,32 +111,24 @@ const searchSuggestArtists = ref([])
 const searchSuggestSongs = ref([])
 
 /* methods */
-/**
- * SearchBar的点击事件处理 
- */
+/* SearchBar的点击事件处理 */
 const handleClickSearchBar = () => {
   show.value = true
 }
 
-/**
- * SearchBar清除时的事件处理
- */
+/* SearchBar清除时的事件处理 */
 const handleClearSearchBar = () => {
   hasSuggest.value = false
 }
 
-/**
- * 搜索弹出层关闭时的事件处理
- */
+/* 搜索弹出层关闭时的事件处理 */
 const handleClosePopup = () => {
   keywords.value = ''
   show.value = false
   hasSuggest.value = false
 }
 
-/**
- * 获取搜索建议
- */
+/* 获取搜索建议 */
 const listSearchSuggest = async () => {
   const query = keywords.value
   if (query) {
@@ -156,18 +148,21 @@ const listSearchSuggest = async () => {
   }
 }
 
-/**
- * 歌手按钮的点击事件处理
- */
+/* 歌手按钮的点击事件处理 */
 const handleClickCategoryArtists = () => {
   router.push({
     name: 'ArtistsList'
   })
 }
 
-/**
- * 搜索结果中的歌手点击事件处理
- */
+/* 排行榜按钮的点击事件处理 */
+const handleClickRank = () => {
+  router.push({
+    name: 'Rank'
+  })
+}
+
+/* 搜索结果中的歌手点击事件处理 */
 const handleClickSearchArtist = (id: number) => {
   router.push({
     name: 'ArtistDetail',

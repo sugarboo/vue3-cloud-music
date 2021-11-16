@@ -30,6 +30,18 @@ const routes: Array<RouteRecordRaw> = [
     path: '/artists/detail',
     name: 'ArtistDetail',
     component: () => import('@/views/artists/ArtistDetail.vue')
+  },
+  /* 排行榜 - 列表页 */
+  {
+    path: '/rank',
+    name: 'Rank',
+    component: () => import('@/views/rank/RankList.vue')
+  },
+  /* 排行榜 - 详情页 */
+  {
+    path: '/rank/detail',
+    name: 'RankDetail',
+    component: () => import('@/views/rank/RankDetail.vue')
   }
 ]
 

@@ -10,7 +10,7 @@
       :finished="listFinished" 
       @load="handleLoadList"
     >
-      <van-cell v-for="item in list" :key="item['id']">
+      <van-cell v-for="(item, index) in list" :key="item['id']">
         <SongItem :data="item" />
       </van-cell>
     </van-list>
@@ -33,9 +33,7 @@ const listFinished = ref(false)
 let hasMore = true
 
 /* methods */
-/**
- * 获取新歌速递列表数据
- */
+/* 获取新歌速递列表数据 */
 const listNewSongs = async () => {
   try {
     const res: any = await getNewSongList()
@@ -45,9 +43,7 @@ const listNewSongs = async () => {
   }
 }
 
-/**
- * van-list触底时的事件处理
- */
+/*  van-list触底时的事件处理 */
 const handleLoadList = () => {
   if (!allList.value.length) {
     listNewSongs().then(() => {
@@ -58,9 +54,7 @@ const handleLoadList = () => {
   loadList()
 }
 
-/**
- * 加载更多列表数据
- */
+/* 加载更多列表数据 */
 const loadList = () => {
   listLoading.value = true
   // 获取需要加载数据的位置索引, 为当前显示的列表的最后一个元素的索引 + 1, 即list.length

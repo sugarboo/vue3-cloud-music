@@ -18,6 +18,7 @@ export interface Artist {
 export interface ArtistDetail {
   artist: {
     name: string // 歌手姓名
+    cover: string // 歌手图片
     transNames?: Array<string> // 歌手译名
     identities?: Array<string>
     badgeField?: number

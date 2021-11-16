@@ -19,9 +19,7 @@ const props = withDefaults(defineProps<{
 const router = useRouter()
 
 /* methods */
-/**
- * 返回按钮的点击事件处理
- */
+/*返回按钮的点击事件处理 */
 const handleClickBack = () => {
   router.back() // === $router.go(-1)
 }
