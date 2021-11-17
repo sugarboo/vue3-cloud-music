@@ -32,7 +32,7 @@ const router = useRouter()
 const handlePlaySong = (id: number) => {
   router.push({
     name: 'SongPlayer',
-    params: { id }
+    query: { id }
   })
 }
 </script>

@@ -30,21 +30,21 @@ const handleClickBack = () => {
 <style lang="less" scoped>
 .main-pic {
   width: 100%;
-  height: 305px;
+  height: 255px; // (667 * 1 - 0.618)
   position: relative;
   .name {
-    position: absolute;
-    bottom: 0px;
-    right: 8px;
-    z-index: 1000;
-    font-size: 40px;
+    font-size: 36px;
     font-weight: 700;
     letter-spacing: -2px;
     color: #ffffff;
     font-family: 'Noto Sans SC', sans-serif;
+    position: absolute;
+    bottom: 0px;
+    right: 8px;
+    z-index: 1000;
     .sub-name {
       text-align: end;
-      font-size: 24px;  
+      font-size: 20px;  
       letter-spacing: -1px;
       color: #f6f6f6;
     }

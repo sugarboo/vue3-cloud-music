@@ -10,7 +10,7 @@
         v-for="item in list"
         :key="item.id"
         :title="item.name"
-        :label="getSongsArtistsNames(item.ar)"
+        :label="formatArtistsNames(item.ar)"
         class="single-line"
         @click="handlePlaySong(item.id)"
       />
@@ -26,6 +26,8 @@ import { useRouter } from 'vue-router'
 import { getArtistSongsList } from '@/api/artist'
 
 import { SongsListQuery, SongItem, SongsAr } from '@/interface/artists'
+
+import { formatArtistsNames } from '@/utils/formatter'
 
 const props = defineProps<{
   id: number // 歌手id
@@ -72,20 +74,11 @@ const handleLoadList = () => {
   }
 }
 
-/* 获取当前歌曲所有参与的歌手名字字符串 */
-const getSongsArtistsNames = (artistsList: Array<SongsAr>) => {
-  let names = ''
-  artistsList.forEach((item, index) => {
-    names += index === artistsList.length - 1 ? item.name : `${item.name} / `
-  })
-  return names
-}
-
 /* 歌曲点击的事件处理: 跳转到歌曲播放页 */
 const handlePlaySong = (id: number) => {
   router.push({
     name: 'SongPlayer',
-    params: { id }
+    query: { id }
   })
 }
 

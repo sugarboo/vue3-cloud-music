@@ -5,7 +5,10 @@ export function getSongUrl(query: number) {
   return request({
     url: '/song/url',
     method: 'GET',
-    params: { id: query }
+    params: { 
+      id: query,
+      // br: 999000
+    }
   })
 }
 
@@ -15,5 +18,14 @@ export function getSongLyric(query: number) {
     url: '/lyric',
     method: 'GET',
     params: { id: query }
+  })
+}
+
+/* 根据id获取歌曲详情 */
+export function getSongDetail(query: number) {
+  return request({
+    url: '/song/detail',
+    method: 'GET',
+    params: { ids: query }
   })
 }

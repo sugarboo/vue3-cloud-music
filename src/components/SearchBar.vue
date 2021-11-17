@@ -33,7 +33,7 @@
               <span>单曲</span>
             </div>
               <van-list>
-                <van-cell class="single-line" v-for="item in searchSuggestSongs" :key="item.id" is-link>
+                <van-cell class="single-line" v-for="item in searchSuggestSongs" :key="item.id" is-link @click="handlePlaySong(item.id)">
                   <span>{{ item.name }}</span>
                   <span> - </span>
                   <span v-for="(artistItem, artistIndex) in item.artists" :key="artistItem.id">
@@ -167,6 +167,14 @@ const handleClickSearchArtist = (id: number) => {
 const handleClickSearchAlbum = (id: number) => {
   router.push({
     name: 'AlbumDetail',
+    query: { id }
+  })
+}
+
+/* 搜索结果中的单曲点击事件处理 - 跳转到歌曲播放页 */
+const handlePlaySong = (id: number) => {
+  router.push({
+    name: 'SongPlayer',
     query: { id }
   })
 }
