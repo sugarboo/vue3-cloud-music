@@ -26,7 +26,7 @@ export interface ArtistDetail {
     musicSize: number
     albumSize: number
     mvSize: number
-  },
+  }
   identify?: {
     imageDesc: string
   }

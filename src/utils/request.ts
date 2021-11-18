@@ -19,6 +19,7 @@ service.interceptors.request.use(
     // config.headers["Access-Control-Allow-Origin"] = "*"
     // config.headers["Access-Control-Allow-Headers"] = "ua,version,channel,subchannel,content-type,mgm-user-agent,IMEI,IMSI,mgm-Network-type,mgm-Network-standard,uid,logId,msisdn,location-data,location-info,mgm-network-operators,test,token,activityId,aversionid,bversionid,mtoken,OAID,HWID,deviceId"
     // config.headers["Access-Control-Allow-Methods"] = "GET,POST"
+    Toast.loading({ forbidClick: true })
     return config
   },
   (error: any) => {
@@ -51,6 +52,7 @@ service.interceptors.response.use(
       }
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
+      Toast.clear()
       return response.data
     }
   },

@@ -56,7 +56,6 @@ const detailArtist = async (id: number) => {
     artistDetail.value = res.data
   } catch (error) {
     console.log(error)
-    
   }
 }
 
