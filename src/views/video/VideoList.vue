@@ -35,13 +35,13 @@ const listGroup = async () => {
 }
 
 /* 侧边栏切换时的监听事件处理 */
-const handleChangeSidebar = () => {
+const handleChangeSidebar = (): void => {
   const { id } = groupList.value[Number(bar.value)]
   listVideo(id)
 }
 
 /* 获取当前视频标签对应的视频列表数据 */
-const listVideo = (id: number) => {
+const listVideo = (id: number): void => {
   console.log(id)
   
 }

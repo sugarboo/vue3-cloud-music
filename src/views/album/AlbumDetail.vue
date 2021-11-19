@@ -55,7 +55,7 @@ const detailAlbum = async (id: number) => {
 }
 
 /* 歌曲点击的事件处理: 跳转到歌曲播放页 */
-const handlePlaySong = (id: number) => {
+const handlePlaySong = (id: number): void => {
   router.push({
     name: 'SongPlayer',
     query: { id }

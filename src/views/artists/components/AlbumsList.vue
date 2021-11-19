@@ -17,7 +17,7 @@
             <template #value>
               <div class="name-and-date">
                 <div class="name">{{ item.name }}</div>
-                <div class="date">{{ formatPublishTime(item.publishTime) }}</div>
+                <div class="date">{{ formatUnixTime(item.publishTime) }}</div>
               </div>
             </template>
           </van-cell>
@@ -32,6 +32,8 @@ import { useRouter } from 'vue-router'
 import { getArtistAlbumsList } from '@/api/artist'
 
 import { AlbumsListQuery, AlbumItem } from '@/interface/artists'
+
+import { formatUnixTime } from '@/utils/formatter'
 
 const props = defineProps<{
   id: number // 歌手id
@@ -68,7 +70,7 @@ const listAlbums = async (query: AlbumsListQuery) => {
   }
 }
 /* van-list触底时的事件处理: 专辑列表 加载更多 */
-const handleLoadList = () => {
+const handleLoadList = (): void => {
   if (hasMore.value) {
     page++
     query.offset = page * limit
@@ -76,13 +78,8 @@ const handleLoadList = () => {
   }
 }
 
-/*专辑发行时间格式处理 */
-const formatPublishTime = (time: string) => {
-  return new Date(time).toLocaleString('chinese', { 'hour12': false }).split(' ')[0].split('/').join('-')
-}
-
 /* 专辑的点击事件处理 */
-const handleClickAlbum = (id: number) => {
+const handleClickAlbum = (id: number): void => {
   router.push({
     name: 'AlbumDetail',
     query: { id }

@@ -6,3 +6,10 @@ export interface SongDetail {
   ar: Array<Ar>
   al: Al
 }
+
+/* 歌词 */
+export interface LyricItem {
+  id: number
+  time: number
+  content: string
+}

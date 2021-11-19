@@ -44,7 +44,7 @@ const listNewSongs = async () => {
 }
 
 /*  van-list触底时的事件处理 */
-const handleLoadList = () => {
+const handleLoadList = (): void => {
   if (!allList.value.length) {
     listNewSongs().then(() => {
       loadList()
@@ -55,7 +55,7 @@ const handleLoadList = () => {
 }
 
 /* 加载更多列表数据 */
-const loadList = () => {
+const loadList = (): void => {
   listLoading.value = true
   // 获取需要加载数据的位置索引, 为当前显示的列表的最后一个元素的索引 + 1, 即list.length
   const index = list.value.length

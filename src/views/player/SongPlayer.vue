@@ -14,14 +14,16 @@
       </div>
       <span class="album-name single-line">{{ detail.al.name }}</span>
     </div>
-    <div v-if="detail.al" class="cover-area" @click="handleSwitch">
-      <van-image v-show="showCover" class="cover" :src="detail.al.picUrl" fit="cover">
+    <div class="cover-area" @click="handleSwitch">
+      <van-image v-if="detail.al" v-show="showCover" ref class="cover" :src="detail.al.picUrl" fit="cover">
         <template v-slot:loading>
           <van-loading type="spinner" size="40" />
         </template>
       </van-image>
-      <div v-show="!showCover" class="lyric">
-        <div>{{ lyric }}</div>
+      <div v-show="!showCover" class="lyric" ref="lyricDiv">
+        <ul ref="lyricContainer" class="lyric-container">
+          <li class="lyric-item inactive-lyric" v-for="item in lyric" :key="item.id" :data-time="item.time">{{ item.content }}</li>
+        </ul>
       </div>
     </div>
     <div class="name-area">
@@ -59,7 +61,7 @@ import { Toast } from 'vant'
 
 import { getSongUrl, getSongLyric, getSongDetail } from '@/api/song'
 
-import { SongDetail } from '@/interface/song'
+import { SongDetail, LyricItem } from '@/interface/song'
 
 import { formatArtistsNames } from '@/utils/formatter'
 
@@ -68,14 +70,19 @@ const router = useRouter()
 
 /* data */
 const mp3Url = ref('') // 当前歌曲的url
-const lyric = ref('') // 当前歌曲的歌词
+const lyric = ref<Array<LyricItem>>([]) // 当前歌曲的歌词
 const detail = ref(<SongDetail>{}) // 当前歌曲的详情
-const audio = ref() // audio元素的refs
+const audio = ref<any>() // audio元素的refs
 const isPlaying = ref(false) // 是否正在播放
 const duration = ref(0) // 歌曲时长, 从audio标签中的属性获得
-const dtCountDown = ref() // 歌曲倒计时的refs
+const dtCountDown = ref<any>() // 歌曲倒计时的refs
 const currentPercentage = ref(0) // 当前播放的百分比
-const showCover = ref(true)
+
+const showCover = ref(true) // 封面 / 歌词的切换状态
+const lyricDiv = ref<any>()
+const lyricContainer = ref<any>() // 歌词区域容器Dom
+let lyricHeight: number = 0 // 歌词区域容器高度
+let lyricScrollHeight: number = 0 // 歌词区域滚动高度
 
 /* methods */
 /* 根据歌曲id, 获取歌曲url */
@@ -88,7 +95,24 @@ const fetchSongUrl = async (id: number) => {
 /* 根据歌曲id, 获取歌曲歌词 */
 const fetchSongLyric = async (id: number) => {
   const res: any = await getSongLyric(id)
-  lyric.value = res.lrc.lyric
+  const { lyric: resLyric } = res.lrc
+
+  // 处理获取到的歌词数据
+  const lyricArr: Array<string> = resLyric.split(/\n/) // 根据换行符, 将获取到的歌词数据切割为字符串数组
+  
+  const lyricObjArr: Array<LyricItem> = [] // 遍历lyricArr, 构造Array<LyricItem>
+  lyricArr.forEach(item => {
+    let time = item.split(']')[0].substring(1)
+    let content = item.split(']')[1]
+    if (content) {
+      lyricObjArr.push({
+        time: formatLyricTime(time),
+        content,
+        id: parseInt(Math.random().toString().slice(-6))
+      })
+    }
+  })
+  lyric.value = lyricObjArr
 }
 
 /* 根据歌曲id, 获取歌曲详情 */
@@ -99,12 +123,12 @@ const detailSong = async (id: number) => {
 }
 
 /* Top-area 下拉按钮的点击事件处理 */
-const handleClickSlideDown = () => {
+const handleClickSlideDown = (): void => {
   router.go(-1)
 }
 
 /* 播放/暂停按钮的点击事件处理 */
-const handlePlay = () => {
+const handlePlay = (): void => {
   if (isPlaying.value) {
     audio.value.pause()
     dtCountDown.value.pause()
@@ -116,28 +140,58 @@ const handlePlay = () => {
 }
 
 /* 歌曲播放结束时的事件监听处理 */
-const handleAudioEnded = () => {
+const handleAudioEnded = (): void => {
   isPlaying.value = false
   dtCountDown.value.reset()
   currentPercentage.value = 0
+  lyricContainer.value.style.transform = `translateY(${lyricScrollHeight}px)`
+  lyricScrollHeight = 0
 }
 
 /* 歌曲加载完毕后的事件监听 */
-const handleLoaded = () => {
+const handleLoaded = (): void => {
   duration.value = audio.value.duration
+  lyricScrollHeight = 0
 }
 
 /* 歌曲当前播放时间变化时的事件监听 */
-const handleAudioTimeUpdate = () => {
+const handleAudioTimeUpdate = (): void => {
   const { currentTime } = audio.value || 0
   if (currentTime) {
     currentPercentage.value = Math.round(currentTime / duration.value * 100)
+    handleLyricScroll(currentTime)
   }
 }
 
 /* 封面/歌词切换的点击事件处理 */
-const handleSwitch = () => {
+const handleSwitch = (): void => {
   showCover.value = !showCover.value
+}
+
+/* 歌词时间的格式化 ('XX:XX.XXX' -> 00.000) */
+const formatLyricTime = (time: string): number => {
+  let min = Number(time.split(':')[0])
+  let second = Number(time.split(':')[1])
+  return Number((min * 60 + second).toFixed(3))
+}
+
+/* 歌词滚动 */
+const handleLyricScroll = (currentTime: number) => {
+  const lyricItemsDom = lyricContainer.value.querySelectorAll('.lyric-item')
+  lyric.value.forEach((item, index) => {
+    if (Math.abs(item.time - currentTime) <= 0.1) {
+      lyricScrollHeight += lyricItemsDom[index].offsetHeight
+      lyricItemsDom.forEach((domItem, domIndex) => {
+        if (domIndex !== index) {
+          domItem.classList.add('inactive-lyric')
+          domItem.classList.remove('active-lyric')
+        }
+      })
+      lyricItemsDom[index].classList.add('active-lyric')
+      lyricItemsDom[index].classList.remove('inactive-lyric')
+      lyricContainer.value.style.transform = `translateY(${-lyricScrollHeight}px)`
+    }
+  })
 }
 
 onMounted(() => {
@@ -150,6 +204,7 @@ onMounted(() => {
   fetchSongUrl(Number(id))
   detailSong(Number(id))
   fetchSongLyric(Number(id))
+  lyricHeight = lyricDiv.value.offsetHeight / 2
 })
 </script>
 
@@ -190,7 +245,7 @@ onMounted(() => {
     align-items: center;
     .cover {
       width: 84%;
-      height: 100%;
+      height: 300px;
       border-radius: 10px;
       box-shadow: 0 4px 12px 0 rgba(128, 128, 128, 0.382);
       :deep(.van-image__img) {
@@ -198,9 +253,24 @@ onMounted(() => {
       }
     }
     .lyric {
-      width: 84%;
+      width: 300px;
       height: 300px;
       overflow: hidden;
+      font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      .lyric-container {
+        overflow: auto;
+      }
+      .active-lyric {
+        color: #f2f2f2;
+        zoom: 1.25;
+        transition: 0.2s ease-in-out;
+        // font-weight: 600;
+        font-family: 'Noto Sans SC', sans-serif;
+      }
+      .inactive-lyric {
+        color: transparent;
+        text-shadow: 1px 1px 2px #d2d2d2;
+      }
     }
   }
   .name-area {
@@ -214,7 +284,7 @@ onMounted(() => {
   }
   .progress-area {
     flex: 1;
-    width: 84%;
+    width: 300px;
     margin: 0 auto;
     .count-down {
       text-align: end;
@@ -264,8 +334,17 @@ onMounted(() => {
         max-width: 180px;
       }
     }
+    .cover-area {
+      .cover, .lyric {
+        width: 240px;
+        height: 240px;
+      }
+    }
     .name-area {
       max-width: 250px;
+    }
+    .progress-area {
+      width: 240px;
     }
     .btn-area {
       .btn-group {

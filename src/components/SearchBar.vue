@@ -114,24 +114,24 @@ const searchSuggestSongs = ref<Array<Song>>([])
 
 /* methods */
 /* SearchBar的点击事件处理 */
-const handleClickSearchBar = () => {
+const handleClickSearchBar = (): void => {
   show.value = true
 }
 
 /* SearchBar清除时的事件处理 */
-const handleClearSearchBar = () => {
+const handleClearSearchBar = (): void => {
   hasSuggest.value = false
 }
 
 /* 搜索弹出层关闭时的事件处理 */
-const handleClosePopup = () => {
+const handleClosePopup = (): void => {
   keywords.value = ''
   show.value = false
   hasSuggest.value = false
 }
 
 /* 获取搜索建议 */
-const listSearchSuggest = async () => {
+const listSearchSuggest = async ()  => {
   const query = keywords.value
   if (query) {
     try {
@@ -151,12 +151,12 @@ const listSearchSuggest = async () => {
 }
 
 /* 分类按钮(歌手 / 视频 / 排行榜)的点击事件处理  */
-const handleClickCategory = (routerName: string) => {
+const handleClickCategory = (routerName: string): void => {
   router.push({ name: routerName })
 }
 
 /* 搜索结果中的歌手点击事件处理 */
-const handleClickSearchArtist = (id: number) => {
+const handleClickSearchArtist = (id: number): void => {
   router.push({
     name: 'ArtistDetail',
     query: { id }
@@ -164,7 +164,7 @@ const handleClickSearchArtist = (id: number) => {
 }
 
 /* 搜索结果中的专辑点击事件处理 */
-const handleClickSearchAlbum = (id: number) => {
+const handleClickSearchAlbum = (id: number): void => {
   router.push({
     name: 'AlbumDetail',
     query: { id }
@@ -172,7 +172,7 @@ const handleClickSearchAlbum = (id: number) => {
 }
 
 /* 搜索结果中的单曲点击事件处理 - 跳转到歌曲播放页 */
-const handlePlaySong = (id: number) => {
+const handlePlaySong = (id: number): void => {
   router.push({
     name: 'SongPlayer',
     query: { id }

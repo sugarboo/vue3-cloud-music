@@ -35,7 +35,7 @@ const listRank = async () => {
 }
 
 /* 排行榜的点击事件处理 */
-const handleClickRankItem = (id: number) => {
+const handleClickRankItem = (id: number): void => {
   router.push({
     name: 'RankDetail',
     query: { id }
