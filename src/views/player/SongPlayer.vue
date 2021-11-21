@@ -15,14 +15,14 @@
       <span class="album-name single-line">{{ detail.al.name }}</span>
     </div>
     <div class="cover-area" @click="handleSwitch">
-      <van-image v-if="detail.al" v-show="showCover" ref class="cover" :src="detail.al.picUrl" fit="cover">
+      <van-image v-if="detail.al" v-show="showCover" class="cover" :src="detail.al.picUrl" fit="cover">
         <template v-slot:loading>
           <van-loading type="spinner" size="40" />
         </template>
       </van-image>
       <div v-show="!showCover" class="lyric" ref="lyricDiv">
-        <ul ref="lyricContainer" class="lyric-container">
-          <li class="lyric-item inactive-lyric" v-for="item in lyric" :key="item.id" :data-time="item.time">{{ item.content }}</li>
+        <ul ref="lyricContent" class="lyric-container">
+          <li :class="['lyric-item', refActiveLyricIndex === index ? 'active-lyric' : 'inactive-lyric']" v-for="(item, index) in lyric" :key="item.id" :data-index="index">{{ item.content }}</li>
         </ul>
       </div>
     </div>
@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 
 import { useRoute, useRouter } from 'vue-router'
 
@@ -79,10 +79,12 @@ const dtCountDown = ref<any>() // 歌曲倒计时的refs
 const currentPercentage = ref(0) // 当前播放的百分比
 
 const showCover = ref(true) // 封面 / 歌词的切换状态
-const lyricDiv = ref<any>()
-const lyricContainer = ref<any>() // 歌词区域容器Dom
-let lyricHeight: number = 0 // 歌词区域容器高度
+const refActiveLyricIndex = ref(0)
+const lyricDiv = ref<any>() // 高度固定的歌词外层div
+const lyricContent = ref<any>() // 歌词区域容器Dom
+let lyricDivHeight: number = 0 // 歌词外层容器(lyricDiv)的高度
 let lyricScrollHeight: number = 0 // 歌词区域滚动高度
+let activeLyricIndex = 0 // 全局保存当前高亮歌词的索引
 
 /* methods */
 /* 根据歌曲id, 获取歌曲url */
@@ -144,8 +146,10 @@ const handleAudioEnded = (): void => {
   isPlaying.value = false
   dtCountDown.value.reset()
   currentPercentage.value = 0
-  lyricContainer.value.style.transform = `translateY(${lyricScrollHeight}px)`
+  lyricContent.value.style.transform = `translateY(0px)`
   lyricScrollHeight = 0
+  activeLyricIndex = 0
+  refActiveLyricIndex.value = 0
 }
 
 /* 歌曲加载完毕后的事件监听 */
@@ -158,8 +162,8 @@ const handleLoaded = (): void => {
 const handleAudioTimeUpdate = (): void => {
   const { currentTime } = audio.value || 0
   if (currentTime) {
-    currentPercentage.value = Math.round(currentTime / duration.value * 100)
     handleLyricScroll(currentTime)
+    currentPercentage.value = Math.round(currentTime / duration.value * 100)
   }
 }
 
@@ -177,21 +181,25 @@ const formatLyricTime = (time: string): number => {
 
 /* 歌词滚动 */
 const handleLyricScroll = (currentTime: number) => {
-  const lyricItemsDom = lyricContainer.value.querySelectorAll('.lyric-item')
-  lyric.value.forEach((item, index) => {
-    if (Math.abs(item.time - currentTime) <= 0.1) {
-      lyricScrollHeight += lyricItemsDom[index].offsetHeight
-      lyricItemsDom.forEach((domItem, domIndex) => {
-        if (domIndex !== index) {
-          domItem.classList.add('inactive-lyric')
-          domItem.classList.remove('active-lyric')
-        }
-      })
-      lyricItemsDom[index].classList.add('active-lyric')
-      lyricItemsDom[index].classList.remove('inactive-lyric')
-      lyricContainer.value.style.transform = `translateY(${-lyricScrollHeight}px)`
+  if (activeLyricIndex >= lyric.value.length) {
+    return
+  }
+
+  lyricDivHeight = lyricDiv.value.offsetHeight / 2 // 获取歌词外层固定高度容器的高度
+  const lyricItem: LyricItem = lyric.value[activeLyricIndex] // 当前的高亮歌词
+  if (currentTime > lyricItem.time) {
+    const lyricDomArr = lyricContent.value.querySelectorAll('.lyric-item') // 歌词dom元素数组
+    const index = parseInt(lyricDomArr[activeLyricIndex].dataset.index)
+    if (activeLyricIndex === index) {
+      refActiveLyricIndex.value = activeLyricIndex
+      activeLyricIndex ++
+      if (activeLyricIndex >= lyric.value.length) {
+        return
+      }
+      lyricScrollHeight += lyricDomArr[activeLyricIndex].offsetHeight
+      lyricContent.value.style.transform = `translateY(${lyricDivHeight - lyricScrollHeight}px)`
     }
-  })
+  }
 }
 
 onMounted(() => {
@@ -204,7 +212,6 @@ onMounted(() => {
   fetchSongUrl(Number(id))
   detailSong(Number(id))
   fetchSongLyric(Number(id))
-  lyricHeight = lyricDiv.value.offsetHeight / 2
 })
 </script>
 
@@ -262,13 +269,13 @@ onMounted(() => {
       }
       .active-lyric {
         color: #f2f2f2;
-        zoom: 1.25;
-        transition: 0.2s ease-in-out;
-        // font-weight: 600;
-        font-family: 'Noto Sans SC', sans-serif;
+        zoom: 1.2;
+        font-weight: 600;
+        transition: all 0.2s ease-in-out;
       }
       .inactive-lyric {
         color: transparent;
+        transition: all 0.2s ease-in-out;
         text-shadow: 1px 1px 2px #d2d2d2;
       }
     }
