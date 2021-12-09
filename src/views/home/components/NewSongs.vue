@@ -44,11 +44,10 @@ const listNewSongs = async () => {
 }
 
 /*  van-list触底时的事件处理 */
-const handleLoadList = (): void => {
+const handleLoadList = async(): Promise<void> => {
   if (!allList.value.length) {
-    listNewSongs().then(() => {
-      loadList()
-    })
+    await listNewSongs()
+    loadList()
     return
   }
   loadList()

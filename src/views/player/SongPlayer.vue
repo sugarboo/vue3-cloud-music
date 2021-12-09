@@ -202,16 +202,15 @@ const handleLyricScroll = (currentTime: number) => {
   }
 }
 
-onMounted(() => {
+onMounted(async() => {
   const { id } = route.query
-  if(!id) {
+  if (!id) {
     Toast.fail('ERROR')
     router.back()
     return
   }
-  fetchSongUrl(Number(id))
-  detailSong(Number(id))
-  fetchSongLyric(Number(id))
+  // 获取歌曲url, 歌曲详情, 歌词
+  await Promise.all([fetchSongUrl(Number(id)), detailSong(Number(id)), fetchSongLyric(Number(id))])
 })
 </script>
 

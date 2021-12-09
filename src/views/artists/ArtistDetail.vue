@@ -71,12 +71,8 @@ const handleClickBack = (): void => {
 }
 
 onMounted(() => {
-  // const { id } = route.query
-  if (!id) {
-    handleNotFound()
-    return
-  }
-  detailArtist(id)
+  !id && handleNotFound()
+  id && detailArtist(id)
 })
 </script>
 
