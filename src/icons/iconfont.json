@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "15592140",
+      "name": "play-list-fill",
+      "font_class": "play-list",
+      "unicode": "eadf",
+      "unicode_decimal": 60127
+    },
+    {
       "icon_id": "7417086",
       "name": "上一首",
       "font_class": "shangyishou",

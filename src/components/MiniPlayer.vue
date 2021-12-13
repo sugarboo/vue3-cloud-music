@@ -8,7 +8,7 @@
     <!-- 播放列表按钮 -->
       <div class="playlist-btn-wrap">
         <van-button class="btn playlist-btn">
-          <van-icon name="bars" />
+          <span class="iconfont icon-play-list" />
         </van-button>
       </div>    
 
