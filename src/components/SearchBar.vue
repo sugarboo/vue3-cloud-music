@@ -9,7 +9,11 @@
         background="#dd001b"
         :disabled="true"
         @click="handleClickSearchBar"
-      ></van-search>
+      >
+        <template #left>
+          <van-button type="primary" size="small" round icon="wap-nav" @click="toggleSideBar" />
+        </template>
+      </van-search>
     </div>
 
     <!-- 搜索弹出层 -->
@@ -178,6 +182,12 @@ const handlePlaySong = (id: number): void => {
     query: { id }
   })
 }
+
+/* 侧边栏按钮的点击事件处理 */
+const toggleSideBar = (): void => {
+  console.log('sidebar')
+  
+}
 </script>
 
 <style lang="less" scoped>
@@ -185,6 +195,9 @@ const handlePlaySong = (id: number): void => {
   height: 100%;
   .search-bar-wrap {
     height: 100%;
+    .van-search {
+      padding-left: 2px;
+    }
   }
   .popup-wrap {
     height: 100%;

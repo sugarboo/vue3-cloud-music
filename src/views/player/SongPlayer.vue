@@ -39,7 +39,7 @@
         <div class="prev-btn">
           <span class="iconfont icon-shangyishou" />
         </div>
-        <button class="main-btn" @click="handlePlay">
+        <button class="main-btn" @click="toggleMainBtn">
           <van-icon class="pause" v-if="isPlaying" name="pause" />
           <van-icon class="play" v-else name="play" />
         </button>
@@ -130,7 +130,7 @@ const handleClickSlideDown = (): void => {
 }
 
 /* 播放/暂停按钮的点击事件处理 */
-const handlePlay = (): void => {
+const toggleMainBtn = (): void => {
   if (isPlaying.value) {
     audio.value.pause()
     dtCountDown.value.pause()
