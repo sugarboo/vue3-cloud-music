@@ -66,7 +66,7 @@ const listSongs = async (query: SongsListQuery) => {
 }
 
 /* van-list触底时的事件处理: 歌曲列表 加载更多 */
-const handleLoadList = (): void => {
+const handleLoadList = () => {
   if (hasMore.value) {
     page++
     query.offset = page * limit
@@ -75,7 +75,7 @@ const handleLoadList = (): void => {
 }
 
 /* 歌曲点击的事件处理: 跳转到歌曲播放页 */
-const handlePlaySong = (id: number): void => {
+const handlePlaySong = (id: number) => {
   router.push({
     name: 'SongPlayer',
     query: { id }

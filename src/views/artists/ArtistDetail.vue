@@ -60,13 +60,13 @@ const detailArtist = async (id: number) => {
 }
 
 /* 歌手id为空或对应该id的歌手不存在时的事件处理 */
-const handleNotFound = (): void => {
+const handleNotFound = () => {
   Toast.fail('歌手不存在')
   router.back()
 }
 
 /* 返回按钮的点击事件处理 */
-const handleClickBack = (): void => {
+const handleClickBack = () => {
   router.back() // === $router.go(-1)
 }
 

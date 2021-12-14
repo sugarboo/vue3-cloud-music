@@ -125,12 +125,12 @@ const detailSong = async (id: number) => {
 }
 
 /* Top-area 下拉按钮的点击事件处理 */
-const handleClickSlideDown = (): void => {
+const handleClickSlideDown = () => {
   router.go(-1)
 }
 
 /* 播放/暂停按钮的点击事件处理 */
-const toggleMainBtn = (): void => {
+const toggleMainBtn = () => {
   if (isPlaying.value) {
     audio.value.pause()
     dtCountDown.value.pause()
@@ -142,7 +142,7 @@ const toggleMainBtn = (): void => {
 }
 
 /* 歌曲播放结束时的事件监听处理 */
-const handleAudioEnded = (): void => {
+const handleAudioEnded = () => {
   isPlaying.value = false
   dtCountDown.value.reset()
   currentPercentage.value = 0
@@ -153,13 +153,13 @@ const handleAudioEnded = (): void => {
 }
 
 /* 歌曲加载完毕后的事件监听 */
-const handleLoaded = (): void => {
+const handleLoaded = () => {
   duration.value = audio.value.duration
   lyricScrollHeight = 0
 }
 
 /* 歌曲当前播放时间变化时的事件监听 */
-const handleAudioTimeUpdate = (): void => {
+const handleAudioTimeUpdate = () => {
   const { currentTime } = audio.value || 0
   if (currentTime) {
     handleLyricScroll(currentTime)
@@ -168,7 +168,7 @@ const handleAudioTimeUpdate = (): void => {
 }
 
 /* 封面/歌词切换的点击事件处理 */
-const handleSwitch = (): void => {
+const handleSwitch = () => {
   showCover.value = !showCover.value
 }
 

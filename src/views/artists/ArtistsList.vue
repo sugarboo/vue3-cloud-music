@@ -96,7 +96,7 @@ const listArtists = async (query: ListQuery) => {
 }
 
 /* 触底加载更多 */
-const handleLoadList = (): void => {
+const handleLoadList = () => {
   if (hasMore.value) {
     page++
     query.offset = page * limit
@@ -105,7 +105,7 @@ const handleLoadList = (): void => {
 }
 
 /* 侧边栏切换时的事件处理 */
-const handleChangeSidebar = (): void => {
+const handleChangeSidebar = () => {
   artistsList.value.length = 0
   page = 0 // 重置页码
   query.offset = page * limit
@@ -114,7 +114,7 @@ const handleChangeSidebar = (): void => {
 }
 
 /* 顶部tab栏切换时的事件处理 */
-const handleChangeTab = (): void => {
+const handleChangeTab = () => {
   artistsList.value.length = 0
   page = 0 // 重置页码
   query.offset = page * limit
@@ -123,7 +123,7 @@ const handleChangeTab = (): void => {
 }
 
 /* 歌手行的点击事件处理: 跳转到对应的歌手详情页面 */
-const handleClickDetail = (id: number): void => {
+const handleClickDetail = (id: number) => {
   router.push({
     name: 'ArtistDetail',
     query: { id }

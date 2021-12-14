@@ -118,17 +118,17 @@ const searchSuggestSongs = ref<Array<Song>>([])
 
 /* methods */
 /* SearchBar的点击事件处理 */
-const handleClickSearchBar = (): void => {
+const handleClickSearchBar = () => {
   show.value = true
 }
 
 /* SearchBar清除时的事件处理 */
-const handleClearSearchBar = (): void => {
+const handleClearSearchBar = () => {
   hasSuggest.value = false
 }
 
 /* 搜索弹出层关闭时的事件处理 */
-const handleClosePopup = (): void => {
+const handleClosePopup = () => {
   keywords.value = ''
   show.value = false
   hasSuggest.value = false
@@ -155,12 +155,12 @@ const listSearchSuggest = async ()  => {
 }
 
 /* 分类按钮(歌手 / 视频 / 排行榜)的点击事件处理  */
-const handleClickCategory = (routerName: string): void => {
+const handleClickCategory = (routerName: string) => {
   router.push({ name: routerName })
 }
 
 /* 搜索结果中的歌手点击事件处理 */
-const handleClickSearchArtist = (id: number): void => {
+const handleClickSearchArtist = (id: number) => {
   router.push({
     name: 'ArtistDetail',
     query: { id }
@@ -168,7 +168,7 @@ const handleClickSearchArtist = (id: number): void => {
 }
 
 /* 搜索结果中的专辑点击事件处理 */
-const handleClickSearchAlbum = (id: number): void => {
+const handleClickSearchAlbum = (id: number) => {
   router.push({
     name: 'AlbumDetail',
     query: { id }
@@ -176,7 +176,7 @@ const handleClickSearchAlbum = (id: number): void => {
 }
 
 /* 搜索结果中的单曲点击事件处理 - 跳转到歌曲播放页 */
-const handlePlaySong = (id: number): void => {
+const handlePlaySong = (id: number) => {
   router.push({
     name: 'SongPlayer',
     query: { id }
@@ -184,7 +184,7 @@ const handlePlaySong = (id: number): void => {
 }
 
 /* 侧边栏按钮的点击事件处理 */
-const toggleSideBar = (): void => {
+const toggleSideBar = () => {
   console.log('sidebar')
   
 }

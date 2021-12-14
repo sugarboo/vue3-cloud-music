@@ -70,7 +70,7 @@ const listAlbums = async (query: AlbumsListQuery) => {
   }
 }
 /* van-list触底时的事件处理: 专辑列表 加载更多 */
-const handleLoadList = (): void => {
+const handleLoadList = () => {
   if (hasMore.value) {
     page++
     query.offset = page * limit
@@ -79,7 +79,7 @@ const handleLoadList = (): void => {
 }
 
 /* 专辑的点击事件处理 */
-const handleClickAlbum = (id: number): void => {
+const handleClickAlbum = (id: number) => {
   router.push({
     name: 'AlbumDetail',
     query: { id }

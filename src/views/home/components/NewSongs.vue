@@ -54,7 +54,7 @@ const handleLoadList = async(): Promise<void> => {
 }
 
 /* 加载更多列表数据 */
-const loadList = (): void => {
+const loadList = () => {
   listLoading.value = true
   // 获取需要加载数据的位置索引, 为当前显示的列表的最后一个元素的索引 + 1, 即list.length
   const index = list.value.length

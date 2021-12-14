@@ -22,7 +22,7 @@ const props = defineProps<{
   subName?: string // 二级名字
 }>()
 
-const handleClickBack = (): void => {
+const handleClickBack = () => {
   router.back()
 }
 </script>

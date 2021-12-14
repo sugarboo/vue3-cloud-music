@@ -29,7 +29,7 @@ const props = defineProps<{
 const router = useRouter()
 
 /* 点击歌曲, 跳转到音乐播放页面 */
-const handlePlaySong = (id: number): void => {
+const handlePlaySong = (id: number) => {
   router.push({
     name: 'SongPlayer',
     query: { id }
