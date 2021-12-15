@@ -9,6 +9,6 @@ import Vant from 'vant'
 import { Lazyload } from 'vant'
 import 'vant/lib/index.css'
 
-import router from './router/index.ts'
+import router from './router/index'
 
 createApp(App).use(router).use(Vant).use(Lazyload).mount('#app')

@@ -20,31 +20,23 @@ export default defineConfig({
     })
   ],
 
+  /* 配置扩展名及@别名 */
   resolve: {
-    /* 配置扩展名 */
     extensions: ['.js', '.vue', '.json', '.ts'],
-    /* 配置@别名 */
     alias: {
       "@": path.resolve(__dirname, "src")
     }
   },
   
-  /* 配置开发环境服务器端口号 */
+  /* 配置开发环境端口号及跨域处理 */
   server: {
-    /* 端口号 */
+    // 端口号
     port: 7777,
+  
+    //跨域处理
+    proxy: { '/api': 'http://localhost:3000/' }
 
-    /* 服务启动成功后自动打开页面 */
+    // 服务启动成功后自动打开页面
     // open: true,
-
-    /* 跨域处理 */
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
-        changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/, ''),
-        ws: false
-      }
-    }
   }
 })
